@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 require('./models/User');
+require('./models/Survey');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const keys = require('./config/keys');
@@ -12,7 +13,7 @@ const app = express();
 
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true} );
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 app.use(
     cookieSession({
@@ -26,6 +27,7 @@ app.use(passport.session());
 
 require('./routes/authRoutes')(app); 
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 if (process.env.NODE_ENV === 'production'){
     app.use(express.static('client/build'));
